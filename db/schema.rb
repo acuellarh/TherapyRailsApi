@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_14_191452) do
+ActiveRecord::Schema.define(version: 2023_10_14_210520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,19 @@ ActiveRecord::Schema.define(version: 2023_10_14_191452) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "order_details", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "order_id", null: false
+    t.integer "quantity"
+    t.decimal "price"
+    t.decimal "discount"
+    t.decimal "total_amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_order_details_on_order_id"
+    t.index ["product_id"], name: "index_order_details_on_product_id"
   end
 
   create_table "order_status_types", force: :cascade do |t|
@@ -66,15 +79,58 @@ ActiveRecord::Schema.define(version: 2023_10_14_191452) do
     t.index ["relationship_id"], name: "index_pacients_on_relationship_id"
   end
 
+  create_table "payment_methods", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.boolean "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "payment_method_id", null: false
+    t.decimal "amount"
+    t.string "payment_support_url"
+    t.date "date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
+    t.index ["payment_method_id"], name: "index_payments_on_payment_method_id"
+  end
+
+  create_table "product_categories", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.bigint "product_category_id", null: false
+    t.string "name"
+    t.decimal "price"
+    t.integer "quantity"
+    t.boolean "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_category_id"], name: "index_products_on_product_category_id"
+  end
+
   create_table "relationships", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "order_details", "orders"
+  add_foreign_key "order_details", "products"
   add_foreign_key "orders", "order_status_types"
   add_foreign_key "orders", "pacients"
   add_foreign_key "pacients", "document_types"
   add_foreign_key "pacients", "genders"
   add_foreign_key "pacients", "relationships"
+  add_foreign_key "payments", "orders"
+  add_foreign_key "payments", "payment_methods"
+  add_foreign_key "products", "product_categories"
 end
