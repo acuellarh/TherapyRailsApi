@@ -1,5 +1,7 @@
 class PacientsController < ApplicationController
   def index
-    render json: Pacient.all
+    pacients = Pacient.all
+
+    render json: PacientsRepresenter.new(pacients).as_json
   end
 end
