@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee: one
+  schedule_date: 2023-10-14
+  schedule_day: MyString
+  start_time: 2023-10-14 22:49:17
+  end_time: 2023-10-14 22:49:17
+  schedule_state: one
+
+two:
+  employee: two
+  schedule_date: 2023-10-14
+  schedule_day: MyString
+  start_time: 2023-10-14 22:49:17
+  end_time: 2023-10-14 22:49:17
+  schedule_state: two

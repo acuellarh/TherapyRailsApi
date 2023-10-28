@@ -10,15 +10,74 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_14_210520) do
+ActiveRecord::Schema.define(version: 2023_10_24_002845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "appointment_states", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.bigint "order_detail_id", null: false
+    t.bigint "employee_id", null: false
+    t.bigint "appointment_state_id", null: false
+    t.string "reason"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["appointment_state_id"], name: "index_appointments_on_appointment_state_id"
+    t.index ["employee_id"], name: "index_appointments_on_employee_id"
+    t.index ["order_detail_id"], name: "index_appointments_on_order_detail_id"
+  end
+
+  create_table "diagnoses", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "document_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "employee_positions", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "employee_schedules", force: :cascade do |t|
+    t.bigint "employee_id", null: false
+    t.date "schedule_date"
+    t.string "schedule_day"
+    t.time "start_time"
+    t.time "end_time"
+    t.bigint "schedule_state_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employee_id"], name: "index_employee_schedules_on_employee_id"
+    t.index ["schedule_state_id"], name: "index_employee_schedules_on_schedule_state_id"
+  end
+
+  create_table "employees", force: :cascade do |t|
+    t.string "name"
+    t.string "lastname"
+    t.string "address"
+    t.bigint "employee_position_id", null: false
+    t.string "email"
+    t.string "identifier"
+    t.string "mobile"
+    t.boolean "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employee_position_id"], name: "index_employees_on_employee_position_id"
   end
 
   create_table "genders", force: :cascade do |t|
@@ -71,12 +130,25 @@ ActiveRecord::Schema.define(version: 2023_10_14_210520) do
     t.string "address"
     t.string "other_contact"
     t.string "other_contact_mobile"
-    t.boolean "status"
+    t.boolean "status", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["document_type_id"], name: "index_pacients_on_document_type_id"
     t.index ["gender_id"], name: "index_pacients_on_gender_id"
     t.index ["relationship_id"], name: "index_pacients_on_relationship_id"
+  end
+
+  create_table "patient_histories", force: :cascade do |t|
+    t.bigint "diagnosis_id"
+    t.bigint "appointment_id", null: false
+    t.string "treatment_given"
+    t.integer "strength_scale"
+    t.integer "pain_scale"
+    t.integer "movement_scale"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["appointment_id"], name: "index_patient_histories_on_appointment_id"
+    t.index ["diagnosis_id"], name: "index_patient_histories_on_diagnosis_id"
   end
 
   create_table "payment_methods", force: :cascade do |t|
@@ -123,6 +195,18 @@ ActiveRecord::Schema.define(version: 2023_10_14_210520) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "schedule_states", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "appointments", "appointment_states"
+  add_foreign_key "appointments", "employees"
+  add_foreign_key "appointments", "order_details"
+  add_foreign_key "employee_schedules", "employees"
+  add_foreign_key "employee_schedules", "schedule_states"
+  add_foreign_key "employees", "employee_positions"
   add_foreign_key "order_details", "orders"
   add_foreign_key "order_details", "products"
   add_foreign_key "orders", "order_status_types"
@@ -130,6 +214,8 @@ ActiveRecord::Schema.define(version: 2023_10_14_210520) do
   add_foreign_key "pacients", "document_types"
   add_foreign_key "pacients", "genders"
   add_foreign_key "pacients", "relationships"
+  add_foreign_key "patient_histories", "appointments"
+  add_foreign_key "patient_histories", "diagnoses"
   add_foreign_key "payments", "orders"
   add_foreign_key "payments", "payment_methods"
   add_foreign_key "products", "product_categories"

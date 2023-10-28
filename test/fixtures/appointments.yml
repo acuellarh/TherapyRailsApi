@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order_detail: one
+  employee: one
+  appointment_state: one
+  reason: MyString
+
+two:
+  order_detail: two
+  employee: two
+  appointment_state: two
+  reason: MyString

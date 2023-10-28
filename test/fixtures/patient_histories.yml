@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  diagnosis: one
+  appointment: one
+  treatment_given: MyString
+  strength_scale: 1
+  pain_scale: 1
+  movement_scale: 1
+
+two:
+  diagnosis: two
+  appointment: two
+  treatment_given: MyString
+  strength_scale: 1
+  pain_scale: 1
+  movement_scale: 1
