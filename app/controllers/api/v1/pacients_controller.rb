@@ -7,32 +7,44 @@ module Api
       end
     
       def create
-        g = Gender.first
-        r = Relationship.first
-        d = Document_type.first
-    
-        pacient = Pacient.new( 
-          gender_id: r,
-           relationship_id: r,
-            document_type_id: d,
-             name: 'Alicia',
-              lastname: 'Marin Henao',
-               birthday: '1982-05-06',
-                identifier: '123456789',
-                 mobile: '3044757458',
-                  email: 'alim@gmail.com',
-                   address: 'carrera 2',
-                   other_contact: 'Andres Calamaro',
-                   other_contact_mobile: '3255412587',
-                   status: true
-                   )   
+
+        pacient = Pacient.new(pacient_params)     
     
         if pacient.save
-          render json: pacient, status: :created
+          render json: PacientRepresenter.new(pacient).as_json, status: :created
         else
-          render json: pacient.errors, status: :unproccessable_entity
+          render json: pacient.errors, status: :unprocessable_entity
         end
     
+      end
+
+      def destroy
+         Pacient.find(params[:id]).destroy!
+         
+         head :no_content
+      end
+
+
+
+      private
+
+      def pacient_params
+        params.require(:pacient).permit(
+          :gender_id,
+          :relationship_id,
+          :document_type_id,
+          :name,
+          :lastname,
+          :birthday,
+          :identifier,
+          :mobile,
+          :email,
+          :address,
+          :other_contact,
+          :other_contact_mobile,
+          :status      
+        )
+        
       end
     
     end
