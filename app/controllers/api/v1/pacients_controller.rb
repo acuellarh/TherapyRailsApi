@@ -9,8 +9,9 @@ module Api
       def create
 
         pacient = Pacient.new(pacient_params)     
-    
+        
         if pacient.save
+          #binding.irb
           render json: PacientRepresenter.new(pacient).as_json, status: :created
         else
           render json: pacient.errors, status: :unprocessable_entity
