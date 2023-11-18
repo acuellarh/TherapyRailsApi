@@ -4,6 +4,7 @@ module Api
       def index
         pacients = Pacient.all
         render json: PacientsRepresenter.new(pacients).as_json
+        #render json: pacients
       end
     
       def create
@@ -55,8 +56,7 @@ module Api
           :other_contact,
           :other_contact_mobile,
           :status      
-        )
-        
+        )        
       end
     
     end
