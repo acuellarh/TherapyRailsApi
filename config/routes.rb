@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :pacients, only: [:index, :create, :destroy, :update]   
       resources :genders, only: [:index, :create]  
       resources :relationships, only: [:index, :create] 
+      resources :document_types, only: [:index, :create] 
     end
   end  
 end
