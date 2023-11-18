@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   namespace :api do  
     namespace :v1 do
       resources :pacients, only: [:index, :create, :destroy, :update]   
-      resources :genders, only: [:index, :create]   
+      resources :genders, only: [:index, :create]  
+      resources :relationships, only: [:index, :create] 
     end
   end  
 end
