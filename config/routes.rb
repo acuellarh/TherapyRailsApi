@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   #get '/pacients' => 'pacients#index'
   namespace :api do  
     namespace :v1 do
-      resources :pacients, only: [:index, :create, :destroy]      
+      resources :pacients, only: [:index, :create, :destroy, :update]      
     end
   end  
 end

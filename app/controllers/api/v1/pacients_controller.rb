@@ -14,9 +14,20 @@ module Api
           #binding.irb
           render json: PacientRepresenter.new(pacient).as_json, status: :created
         else
-          render json: pacient.errors, status: :unprocessable_entity
+          render json: pacient.errors.full_messages, status: :unprocessable_entity
         end
     
+      end
+
+      def update 
+      pacient = Pacient.find(params[:id])
+
+        if pacient.update(pacient_params)
+          render json: PacientRepresenter.new(pacient).as_json, status: :ok       
+        else
+          render json: pacient.errors.full_messages, status: :unprocessable_entity
+        end
+
       end
 
       def destroy
