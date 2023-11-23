@@ -27,7 +27,7 @@ RSpec.describe "Relationships", type: :request do
         expect(response).to have_http_status(:created)
         expect(JSON.parse(response.body)).to include(
           {
-            'id' => 5,
+            'id' => Relationship.last.id,
             'name' => 'TestRelationshipName'
           }
         )

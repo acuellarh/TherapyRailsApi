@@ -3,10 +3,11 @@ Rails.application.routes.draw do
   #get '/pacients' => 'pacients#index'
   namespace :api do  
     namespace :v1 do
-      resources :pacients, only: [:index, :create, :destroy, :update]   
       resources :genders, only: [:index, :create]  
       resources :relationships, only: [:index, :create] 
       resources :document_types, only: [:index, :create] 
+      resources :pacients, only: [:index, :create, :destroy, :update]   
+      resources :orders, only: [:index, :create] 
     end
   end  
 end

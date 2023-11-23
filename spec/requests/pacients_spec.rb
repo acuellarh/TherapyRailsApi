@@ -45,7 +45,7 @@ describe 'Schedule API', type: :request do
         expect(response).to have_http_status(:created)
         expect(JSON.parse(response.body)).to eq(
           {
-            'id' => 1,
+            'id' => Pacient.last.id,
             'name' => 'testName' ,
             'lastname' => 'testLasname' ,
             'name_complete' => 'testName testLasname' ,
