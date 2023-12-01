@@ -1,4 +1,5 @@
 class DocumentTypesRepresenter
+  
   def initialize(document_types)
     @document_types = document_types    
   end

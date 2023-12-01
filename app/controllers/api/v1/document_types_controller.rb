@@ -3,12 +3,12 @@ module Api
     class DocumentTypesController < ApplicationController
       
       def index
-        document_types = Gender.all
+        document_types = DocumentType.all
         render json: DocumentTypesRepresenter.new(document_types).as_json
       end 
           
       def create
-       document_type = Document_type.new(gender_params)     
+       document_type = Document_type.new(document_type_params)     
         
         if document_type.save
           #binding.irb
@@ -20,7 +20,7 @@ module Api
 
       private
 
-      def gender_params
+      def document_type_params
         params.require(:document_type).permit(:name)        
       end
 

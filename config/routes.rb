@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :document_types, only: [:index, :create] 
       resources :pacients, only: [:index, :create, :destroy, :update]   
       resources :orders, only: [:index, :create] 
+      resources :product_categories, only: [:index, :create] 
     end
   end  
 end
