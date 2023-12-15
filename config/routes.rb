@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :pacients, only: [:index, :create, :destroy, :update]   
       resources :orders, only: [:index, :create] 
       resources :product_categories, only: [:index, :create] 
+      resources :products, only: [:index, :create] 
     end
   end  
 end
