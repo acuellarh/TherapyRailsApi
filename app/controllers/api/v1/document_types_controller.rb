@@ -8,7 +8,7 @@ module Api
       end 
           
       def create
-       document_type = Document_type.new(document_type_params)     
+       document_type = DocumentType.new(document_type_params)     
         
         if document_type.save
           #binding.irb
