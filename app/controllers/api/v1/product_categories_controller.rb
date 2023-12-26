@@ -18,6 +18,23 @@ module Api
         end    
       end
 
+      def destroy
+        ProductCategory.find(params[:id]).destroy!
+        
+        head :no_content
+      end
+
+      def update 
+       product_category = ProductCategory.find(params[:id])
+
+        if product_category.update(product_category_params)
+          render json: product_category 
+        else
+          render json: product_category.errors.full_messages, status: :unprocessable_entity
+        end
+
+      end
+
       private
 
       def product_category_params
