@@ -7,7 +7,7 @@ class ProductRepresenter
     {
       id: product.id,
       name: product.name,
-      price: product.price.to_f,
+      price: product.price.to_i,
       quantity: product.quantity.to_i,
       status: product.status, 
       product_category_id: product.product_category_id,
