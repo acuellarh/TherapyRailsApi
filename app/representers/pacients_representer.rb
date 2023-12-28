@@ -10,7 +10,7 @@ class PacientsRepresenter
             name: pacient.name,
             lastname: pacient.lastname,
             name_complete: pacient_name(pacient),
-            birthday: pacient.birthday,
+            birthday: pacient.birthday.strftime("%m-%d-%Y"),            
             identifier: pacient.identifier,
             document_type: pacient.document_type.name,
             mobile: pacient.mobile,

@@ -27,7 +27,7 @@ describe 'Schedule API', type: :request do
             document_type_id: first_document_type.id,
             name: 'testName',
             lastname: 'testLasname',
-            birthday: '1982-05-06',
+            birthday: '05-06-1982',
             identifier: '1234',
             mobile: '300000000901',
             email: 'prueba1234@gmail.com',
@@ -43,13 +43,16 @@ describe 'Schedule API', type: :request do
         }.to change { Pacient.count }.from(0).to(1)    
 
         expect(response).to have_http_status(:created)
+
+        expected_birthday = Date.parse('05-06-1982').strftime("%m-%d-%Y")
+
         expect(JSON.parse(response.body)).to eq(
           {
             'id' => Pacient.last.id,
             'name' => 'testName' ,
             'lastname' => 'testLasname' ,
             'name_complete' => 'testName testLasname' ,
-            'birthday' => '1982-05-06',
+            'birthday' => expected_birthday,
             'identifier' => '1234',
             'document_type' => 'Cedula',
             'mobile' => '300000000901',
@@ -92,7 +95,7 @@ describe 'Schedule API', type: :request do
         document_type_id: first_document_type.id,
         name: 'PruebaDelete',
         lastname: 'Prueba',
-        birthday: '1982-05-06',
+        birthday: '05-06-1982',
         identifier: '85471265',
         mobile: '300000000901',
         email: 'pruebadelete@gmail.com',
