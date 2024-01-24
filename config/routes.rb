@@ -8,7 +8,11 @@ Rails.application.routes.draw do
       resources :document_types, only: [:index, :create] 
       resources :pacients, only: [:index, :create, :destroy, :update]   
       resources :orders, only: [:index, :create] 
+<<<<<<< HEAD
       resources :product_categories, only: [:index, :create, :destroy, :update] 
+=======
+      resources :product_categories, only: [:index, :create] 
+>>>>>>> cd2d22045b35b86ab26cc61f543baf191d2309e6
       resources :products, only: [:index, :create] 
     end
   end  
